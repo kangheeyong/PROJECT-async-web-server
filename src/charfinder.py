@@ -2,7 +2,6 @@ import re
 import sys
 import pickle
 import functools
-import itertools
 import unicodedata
 
 from collections import defaultdict, namedtuple
@@ -50,8 +49,7 @@ class UnicodeNameIndex:
                 index[word].add(char)
         self.index = index
 
-    def find_chars(self, query, start=0, stop=None):
-        stop = sys.maxsize if stop is None else stop
+    def find_chars(self, query):
         result_sets = []
         for word in tokenize(query):
             chars = self.index[word]
@@ -61,15 +59,22 @@ class UnicodeNameIndex:
 
         result = functools.reduce(set.intersection, result_sets)
         result = sorted(result)
-        result_iter = itertools.islice(result, start, stop)
-        return QueryResult(len(result),
-                           (char for char in result_iter))
+        return QueryResult(len(result), result)
+
+    def _describe(self, char):
+        code_str = 'U+{:04X}'.format(ord(char))
+        name = unicodedata.name(char)
+        return CharDescription(code_str, char, name)
+
+    def find_descriptions(self, query, start=0, stop=None):
+        for char in self.find_chars(query).items[start:stop]:
+            yield self._describe(char)
 
 
 def main(*args):
     index = UnicodeNameIndex()
 
-    index.find_chars('chess black')
+    index.find_chars('sign')
     breakpoint()
 
 

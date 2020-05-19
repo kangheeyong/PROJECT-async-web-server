@@ -24,8 +24,29 @@ def test_find_no_word_match():
     assert result.count == 0
 
 
-def test_find_word_match():
+def test_find_word_match_1():
     result = UnicodeNameIndex().find_chars('chess black')
     assert result.count == 6
+
+
+def test_find_word_match_2():
+    result = UnicodeNameIndex().find_chars('sign')
+    assert result.items[:2] == ['#', '$']
+
+
+def test_find_description_match_1():
+    result = UnicodeNameIndex().find_descriptions('sign', 0, 2)
+    result = list(result)
+    assert result[0].char == '#'
+    assert result[1].char == '$'
+
+
+def test_find_description_match_2():
+    result = UnicodeNameIndex().find_descriptions('sign', 1, 3)
+    result = list(result)
+    assert result[0].char == '$'
+    assert result[1].char == '%'
+
+
 
 
