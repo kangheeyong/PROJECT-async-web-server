@@ -8,7 +8,7 @@ RUN apt-get install git \
                     vim -y
 
 RUN apt-get install python3-pip -y
-RUN pip3 install sanic
+RUN pip3 install sanic pytest
 
 RUN git clone https://github.com/kangheeyong/PROJECT-async-web-server.git /root/PROJECT-async-web-server
 

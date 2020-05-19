@@ -2,3 +2,6 @@
 *.swp
 *.so
 *.pickle
+.pytest_cache
+__pycache__
+

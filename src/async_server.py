@@ -6,7 +6,6 @@ from sanic import response
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 TEMPLATE_NAME = os.path.join(BASE_DIR, 'http_template.html')
-CONTENT_TYPE = 'text/html; charset=UTF-8'
 SAMPLE_WORDS = ('bismillah chess cat circled Malayalam digit'
                 ' Roman face Ethiopic black mark symbol dot'
                 ' operator Braille hexagram').split()
