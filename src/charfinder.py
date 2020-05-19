@@ -1,4 +1,5 @@
 import re
+import os
 import sys
 import pickle
 import functools
@@ -7,9 +8,11 @@ import unicodedata
 from collections import defaultdict, namedtuple
 
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 RE_WORD = re.compile('\w+')
 
-INDEX_NAME = 'charfinder_index.pickle'
+INDEX_NAME = os.path.join(BASE_DIR, 'charfinder_index.pickle')
 
 CharDescription = namedtuple('CharDescription', 'code_str char name')
 QueryResult = namedtuple('QueryResult', 'count items')

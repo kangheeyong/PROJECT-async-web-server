@@ -1,7 +1,10 @@
 *.un~
 *.swp
 *.so
+*.pyc
 *.pickle
+*.egg-info
+.tox
 .pytest_cache
 __pycache__
 
