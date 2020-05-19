@@ -73,9 +73,9 @@ class UnicodeNameIndex:
 
 def main(*args):
     index = UnicodeNameIndex()
-
-    index.find_chars('sign')
-    breakpoint()
+    query = ' '.join(args)
+    for char in index.find_descriptions(query):
+        print('{:7}\t{}\t{}'.format(*char))
 
 
 if __name__ == '__main__':
