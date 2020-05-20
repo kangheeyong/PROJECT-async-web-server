@@ -1,4 +1,6 @@
 import os
+import time
+import functools
 
 from sanic import Sanic
 from sanic import response
@@ -27,18 +29,27 @@ template = template.replace('{links}', LINKS_HTML)
 app = Sanic(__name__)
 
 
-@app.get('/')
-async def route(request):
-    query = request.args.get('query', '')
-    print('Query: {!r}'.format(query))
+@functools.lru_cache(maxsize=128)
+def get_UnicodeNameIndex(query):
     if query:
         descriptions = list(index.find_descriptions(query))
         res = '\n'.join(ROW_TPL.format(*descr) for descr in descriptions)
         msg = index.status(query, len(descriptions))
+        time.sleep(2)
     else:
         descriptions = []
         res = ''
         msg = 'Enter words describing characters.'
+
+    return descriptions, res, msg
+
+
+@app.get('/')
+async def route(request):
+    query = request.args.get('query', '')
+    print('Query: {!r}'.format(query))
+
+    descriptions, res, msg = get_UnicodeNameIndex(query)
 
     html = template.format(query=query, result=res, message=msg)
 
