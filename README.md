@@ -2,11 +2,11 @@
 
 
 ## 1. 실행 방법
-### 1.1 설치
-  ```
-  docker build -t toy-web-server .
-  docker run -d -p 8080:8080  toy-web-server
-  ```
-### 1.2 실행
+### 1.1 설치 및 실행
+```
+  make docker_run
+```
+
+### 1.2 접속
   `http://127.0.0.1:8080`
 
