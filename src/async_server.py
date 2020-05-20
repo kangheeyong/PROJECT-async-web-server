@@ -1,9 +1,9 @@
 import os
-import time
-import functools
+import asyncio
 
 from sanic import Sanic
 from sanic import response
+from aiocache import cached
 
 from charfinder import UnicodeNameIndex
 
@@ -29,13 +29,13 @@ template = template.replace('{links}', LINKS_HTML)
 app = Sanic(__name__)
 
 
-@functools.lru_cache(maxsize=128)
-def get_UnicodeNameIndex(query):
+@cached(ttl=3600)
+async def get_UnicodeNameIndex(query):
     if query:
         descriptions = list(index.find_descriptions(query))
         res = '\n'.join(ROW_TPL.format(*descr) for descr in descriptions)
         msg = index.status(query, len(descriptions))
-        time.sleep(2)
+        await asyncio.sleep(1)
     else:
         descriptions = []
         res = ''
@@ -49,7 +49,7 @@ async def route(request):
     query = request.args.get('query', '')
     print('Query: {!r}'.format(query))
 
-    descriptions, res, msg = get_UnicodeNameIndex(query)
+    descriptions, res, msg = await get_UnicodeNameIndex(query)
 
     html = template.format(query=query, result=res, message=msg)
 
