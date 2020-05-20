@@ -10,3 +10,6 @@ test:
 run:
 	python3 src/async_server.py
 
+docker_run:
+	docker build -t toy-web-server -f docker/Dockerfile .
+	docker run -d -p 8080:8080  toy-web-server
