@@ -73,6 +73,16 @@ class UnicodeNameIndex:
         for char in self.find_chars(query).items[start:stop]:
             yield self._describe(char)
 
+    @staticmethod
+    def status(query, counter):
+        if counter == 0:
+            msg = 'No match'
+        elif counter == 1:
+            msg = '1 match'
+        else:
+            msg = '{} matches'.format(counter)
+        return '{} for {!r}'.format(msg, query)
+
 
 def main(*args):
     index = UnicodeNameIndex()
