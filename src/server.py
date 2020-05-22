@@ -6,18 +6,8 @@ from sanic import response
 from aiocache import cached
 
 from charfinder import UnicodeNameIndex
+from server_constant import TEMPLATE_DIR, TEMPLATE_NAME, ROW_TPL, LINKS_HTML
 
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-TEMPLATE_NAME = os.path.join(BASE_DIR, 'http_template.html')
-SAMPLE_WORDS = ('bismillah chess cat circled Malayalam digit'
-                ' Roman face Ethiopic black mark symbol dot'
-                ' operator Braille hexagram').split()
-
-ROW_TPL = '<tr><td>{}</td><th>{}</th><td>{}</td></tr>'
-LINK_TPL = '<a href="/?query={0}" title="find &quot;{0}&quot;">{0}</a>'
-LINKS_HTML = ', '.join(LINK_TPL.format(word) for word in sorted(SAMPLE_WORDS, key=str.upper))
 
 index = UnicodeNameIndex()
 
@@ -27,6 +17,8 @@ template = template.replace('{links}', LINKS_HTML)
 
 
 app = Sanic(__name__)
+for filename in os.listdir(TEMPLATE_DIR):
+    app.static(os.path.join('template', filename), os.path.join(TEMPLATE_DIR, filename))
 
 
 @cached(ttl=3600)
@@ -50,11 +42,17 @@ async def route(request):
     print('Query: {!r}'.format(query))
 
     descriptions, res, msg = await get_UnicodeNameIndex(query)
-
     html = template.format(query=query, result=res, message=msg)
 
     print('Sending {} results'.format(len(descriptions)))
     return response.html(html)
+
+
+@app.websocket('/feed')
+async def feed(request, ws):
+    while True:
+        data = await ws.recv()
+        print('Received: ' + data)
 
 
 if __name__ == '__main__':
