@@ -8,7 +8,7 @@ test:
 	python3 -m pytest tests
 
 run:
-	python3 src/async_server.py
+	python3 src/server.py
 
 docker_run:
 	docker build -t toy-web-server -f docker/Dockerfile .
