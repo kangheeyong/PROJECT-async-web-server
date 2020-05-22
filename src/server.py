@@ -1,5 +1,6 @@
 import os
 import asyncio
+import json
 
 from sanic import Sanic
 from sanic import response
@@ -22,10 +23,10 @@ for filename in os.listdir(TEMPLATE_DIR):
 
 
 @cached(ttl=3600)
-async def get_UnicodeNameIndex(query):
+async def get_UnicodeNameIndex(query, start=0, end=None):
     if query:
         descriptions = list(index.find_descriptions(query))
-        res = '\n'.join(ROW_TPL.format(*descr) for descr in descriptions)
+        res = '\n'.join(ROW_TPL.format(*descr) for descr in descriptions[start:end])
         msg = index.status(query, len(descriptions))
         await asyncio.sleep(1)
     else:
@@ -41,7 +42,7 @@ async def route(request):
     query = request.args.get('query', '')
     print('Query: {!r}'.format(query))
 
-    descriptions, res, msg = await get_UnicodeNameIndex(query)
+    descriptions, res, msg = await get_UnicodeNameIndex(query, 0, 100)
     html = template.format(query=query, result=res, message=msg)
 
     print('Sending {} results'.format(len(descriptions)))
@@ -50,10 +51,20 @@ async def route(request):
 
 @app.websocket('/feed')
 async def feed(request, ws):
+    print(request, ws)
+    cnt = 1
     while True:
-        data = await ws.recv()
-        print('Received: ' + data)
-
+        data = json.loads(await ws.recv())
+        query = data.get('query', '')
+        print('Received: ' + query)
+        descriptions, res, msg = await get_UnicodeNameIndex(query, cnt*100, (cnt+1)*100)
+        if len(descriptions) > cnt*100:
+            print('Sending: {}~{}'.format(cnt*100, (cnt+1)*100 if len(descriptions) > (cnt+1)*100 else len(descriptions)))
+            await ws.send(res)
+            cnt += 1
+        else:
+            print('end')
+            break
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
