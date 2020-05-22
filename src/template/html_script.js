@@ -1,16 +1,13 @@
-
-console.log('123'+query)
-
 var ws;
 function init() {
     ws = new WebSocket("ws://localhost:8080/feed");
     ws.onmessage = function(event){ 
-        console.log(event.data); 
         $('#table01').append(event.data+'<br />');
-    }
-}
+    };
+};
 
 $(document).ready(function(){
+    var contentH_before = 0
     $('#div01').scroll(function(){
         var scrollT = $(this).scrollTop(); 
         var scrollH = $(this).height(); 
@@ -20,10 +17,14 @@ $(document).ready(function(){
                 'scrollT': scrollT,
                 'scrollH': scrollH,
                 'contentH': contentH,
+                'contentH_before': contentH_before,
                 'query': query
             };
-            ws.send(JSON.stringify(msg))
-        }
+            if(contentH_before < contentH){
+                ws.send(JSON.stringify(msg));
+                contentH_before = contentH;
+            };
+        };
     });
 });
 

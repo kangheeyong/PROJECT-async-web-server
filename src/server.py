@@ -51,20 +51,23 @@ async def route(request):
 
 @app.websocket('/feed')
 async def feed(request, ws):
-    print(request, ws)
     cnt = 1
     while True:
         data = json.loads(await ws.recv())
-        query = data.get('query', '')
-        print('Received: ' + query)
+        query = data['query']
         descriptions, res, msg = await get_UnicodeNameIndex(query, cnt*100, (cnt+1)*100)
         if len(descriptions) > cnt*100:
-            print('Sending: {}~{}'.format(cnt*100, (cnt+1)*100 if len(descriptions) > (cnt+1)*100 else len(descriptions)))
+            msg = 'Sending: {} -> {}~{}'.format(query,
+                                                cnt*100,
+                                                (cnt+1)*100 if len(descriptions) > (cnt+1)*100 else len(descriptions))
+            print(msg)
             await ws.send(res)
             cnt += 1
         else:
-            print('end')
+            msg = 'Finish: {}'.format(query)
+            print(msg)
             break
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
