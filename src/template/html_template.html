@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Charfinder</title>
+    <script>
+        var query = "{query}";
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+    <script src="template/html_script.js"></script>
+  </head>
+  <body>
+    Examples: {links}
+    <p>
+      <form action="/">
+        <input type="search" name="query" value="{query}">
+        <input type="submit" value="find"> {message}
+      </form>
+    </p>
+    <div id='div01' style="border:1px solid black;width:800px;height:500px;overflow-y:scroll;">
+        <table id='table01'>
+            {result}
+        </table>
+    </div>
+  </body>
+</html>
