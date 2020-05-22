@@ -28,7 +28,7 @@ async def get_UnicodeNameIndex(query, start=0, end=None):
         descriptions = list(index.find_descriptions(query))
         res = '\n'.join(ROW_TPL.format(*descr) for descr in descriptions[start:end])
         msg = index.status(query, len(descriptions))
-        await asyncio.sleep(1)
+        await asyncio.sleep(1)  # delay time
     else:
         descriptions = []
         res = ''
