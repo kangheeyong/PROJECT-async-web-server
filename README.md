@@ -9,9 +9,11 @@
 
 - 제가 만든 toy project에서는 처음부터 코드를 작성하는 것이아니라 몇몇 기능이 구현된 코드를 제공하고, 이를 분석하여 요구사항에 맞춰서 개발하는 것입니다. 이렇게 한 이유는 이러한 조건이 있어야 효율적으로 공부하고 성장할 수 있다고 생각하기 때문입니다.
 
+- 문제는 [전문가를 위한 파이썬](http://www.yes24.com/Product/Goods/30231768)을 참고했습니다.
+
 ---
 ### 요구사항
-  - requirement에 있는 코드를 참고하여 만들 것.
+  - requirement에 있는 코드를 참고하여 만들 것.[(link)](https://github.com/kangheeyong/PROJECT-async-web-server/tree/master/requirement)
     - 만약 사용한다면 그대로 사용하지 말고 코드 리팩토링해서 사용할 것
   - unicodedata 모듈을 사용하여 검색 인덱스를 만들 것.
     - requirement에 있는 코드를 참고하면 됨.
