@@ -11,7 +11,7 @@ run:
 
 docker_run: docker_container_remove
 	docker build -t toy-web-server -f docker/Dockerfile .
-	docker run -d -p 8080:8080  toy-web-server
+	docker run -d -p 8080:8080 --name toy-server toy-web-server
 
 docker_run_dev: docker_container_remove
 	docker build -t toy-web-server -f docker/Dockerfile . --build-arg DEV=yes
