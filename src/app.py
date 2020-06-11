@@ -7,7 +7,7 @@ from sanic import response
 from aiocache import cached
 
 from charfinder import UnicodeNameIndex
-from server_constant import TEMPLATE_DIR, TEMPLATE_NAME, ROW_TPL, LINKS_HTML
+from app_constant import TEMPLATE_DIR, TEMPLATE_NAME, ROW_TPL, LINKS_HTML
 
 
 index = UnicodeNameIndex()

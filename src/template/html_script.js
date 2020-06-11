@@ -1,11 +1,10 @@
 var ws;
 function init() {
-    ws = new WebSocket("ws://localhost:8080/feed");
+    ws = new WebSocket("ws://localhost:8070/feed");
     ws.onmessage = function(event){ 
         $('#table01').append(event.data+'<br />');
     };
 };
-
 $(document).ready(function(){
     var contentH_before = 0
     $('#div01').scroll(function(){
