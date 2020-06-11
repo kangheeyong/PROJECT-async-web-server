@@ -16,7 +16,7 @@ docker_run: docker_image_remove_dangling
 
 docker_test: docker_image_remove_dangling
 	docker build -t toy-web-server -f docker/Dockerfile .
-	docker run -it --rm -p 8070:8070 --name toy-server toy-web-server python3 -m pytest ./tests
+	docker run --rm --name toy-server toy-web-server python3 -m pytest ./tests
 
 docker_image_remove: docker_image_remove_dangling
 	-docker rmi $$(docker images -q -f reference=toy-web-server)
