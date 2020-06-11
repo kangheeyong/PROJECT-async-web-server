@@ -4,9 +4,6 @@ clean:
 	-find -name "*.pyc" -exec rm {} \;
 	-find -name "*.pickle" -exec rm {} \;
 
-test:
-	python3 -m pytest tests
-
 run:
 	python3 src/app.py
 
