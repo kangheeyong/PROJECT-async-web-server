@@ -16,7 +16,6 @@ with open(TEMPLATE_NAME) as tpl:
     template = tpl.read()
 template = template.replace('{links}', LINKS_HTML)
 
-
 app = Sanic(__name__)
 for filename in os.listdir(TEMPLATE_DIR):
     app.static(os.path.join('template', filename), os.path.join(TEMPLATE_DIR, filename))

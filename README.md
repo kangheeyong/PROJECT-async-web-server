@@ -13,10 +13,10 @@
 
 ---
 ### 요구사항
-  - requirement에 있는 코드를 참고하여 만들 것.[(link)](https://github.com/kangheeyong/PROJECT-async-web-server/tree/master/requirement)
+  - requirement에 있는 코드를 참고하여 만들 것.[(link)](https://github.com/kangheeyong/PROJECT-async-web-server/tree/master/sample)
     - 만약 사용한다면 그대로 사용하지 말고 코드 리팩토링해서 사용할 것
   - unicodedata 모듈을 사용하여 검색 인덱스를 만들 것.
-    - requirement에 있는 코드를 참고하면 됨.
+    - sample에 있는 코드를 참고하면 됨.
   - 버전 관리는 git으로 환경 관리는 docker를 이용할 것.
     - dockerfile을 만들어 바로 배포할 수 있게 할 것.
 ### 추가 요구사항
