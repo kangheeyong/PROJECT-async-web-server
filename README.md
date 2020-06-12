@@ -48,5 +48,4 @@
 
 ## 3. Jenkins를 이용한 빌드 테스트 
   - https://github.com/kangheeyong/TEST-jenkins
-  - test
 
